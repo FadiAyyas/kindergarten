@@ -18,28 +18,32 @@ class ChildrensRequest extends FormRequest
 
     public function rules()
     {
-        $rules = [
-            'childrens.*.childName' => ['required', 'max:24', 'string'],
-            'childrens.*.birthDate' => ['required', 'max:24', 'date'],
-            'childrens.*.gender' => ['required','string'],
-            'childrens.*.childAddress' =>  ['required', 'string'],
-            'childrens.*.medicalNotes' => ['required', 'string'],
+        if(!$this->child_id)
+        {
+            $rules = [
+                'childrens.*.childName' => ['required', 'max:24', 'string'],
+                'childrens.*.birthDate' => ['required', 'max:24', 'date'],
+                'childrens.*.gender' => ['required','string'],
+                'childrens.*.childAddress' =>  ['required', 'string'],
+                'childrens.*.medicalNotes' => ['required', 'string'],
 
-            'childrens.*.class_id' =>  ['required', 'numeric'],
-            'childrens.*.season_year_id' => ['required', 'numeric'],
-        ];
-
-        $updateRules = [
-            'childName' => ['required', 'max:24', 'string'],
-            'birthDate' => ['required', 'max:24', 'date'],
-            'gender' => ['required','string'],
-            'childAddress' =>  ['required', 'string'],
-            'medicalNotes' => ['required', 'string'],
-        ];
-
-        if (!$this->child_id) {
-           $rules += ['childrens.*.ChildImage' => ['required', 'file', 'mimes:jpg,jpeg,png,gif', 'max:3000']];
+                'childrens.*.class_id' =>  ['required', 'numeric'],
+                'childrens.*.season_year_id' => ['required', 'numeric'],
+                'childrens.*.ChildImage' => ['required', 'file', 'mimes:jpg,jpeg,png,gif', 'max:3000']
+            ];
         }
+        else
+        {
+            $rules = [
+                'childName' => ['required', 'max:24', 'string'],
+                'birthDate' => ['required', 'max:24', 'date'],
+                'gender' => ['required','string'],
+                'childAddress' =>  ['required', 'string'],
+                'medicalNotes' => ['required', 'string'],
+            ];
+        }
+
+
 
         switch ($this->method()) {
             case 'POST': {
@@ -47,7 +51,7 @@ class ChildrensRequest extends FormRequest
                 }
             case 'PUT':
             case 'PATCH': {
-                    return $updateRules;
+                    return $rules;
                 }
             default:
                 break;

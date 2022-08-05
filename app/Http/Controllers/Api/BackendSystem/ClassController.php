@@ -24,8 +24,8 @@ class ClassController extends Controller
             ->Join("employees", "employees.id", "=", "teacher_classes.employee_id")
             ->get([
                 'Kgclasses.id as class_id','Kgclasses.class_name', 'Kgclasses.maxCapacity',
-                'levels.level_name', 'levels.level_minAge', 'levels.level_maxAge',
-                'employees.firstName','employees.lastName' ,
+                'levels.id as level_id','levels.level_name', 'levels.level_minAge', 'levels.level_maxAge',
+                'employees.id as emp_id','employees.firstName','employees.lastName' ,
             ])->all();
 
             return $this->returnData('Classes', $classes, ' Classes details ');
@@ -59,7 +59,7 @@ class ClassController extends Controller
         try {
             $data = KGClass::findOrFail($id);
             $data->update($input);
-            return $this->returnSuccessMessage('Level update successfully ');
+            return $this->returnSuccessMessage('class update successfully ');
         } catch (Throwable $e) {
             return $this->returnError('Something was wrong');
         }
@@ -70,9 +70,9 @@ class ClassController extends Controller
         try {
             $data = KGClass::findOrFail($id);
             $data->delete();
-            return $this->returnError("Level delete successfully");
+            return $this->returnError("class delete successfully");
         } catch (Throwable $e) {
-            return $this->returnError('Level does not exists');
+            return $this->returnError('class does not exists');
         }
     }
 }

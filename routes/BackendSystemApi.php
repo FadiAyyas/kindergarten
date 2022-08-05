@@ -78,7 +78,7 @@ Route::group($backendSystem, function () {
     //Childrens Route
     Route::post('/showChildrensDetails', 'ChildrensController@index');
     Route::post('/storeChildrensDetails/{parent_id}', 'ChildrensController@store');
-    Route::put('/updateChildrensDetails/{child_id}', 'ChildrensController@update');
+    Route::post('/updateChildrensDetails/{child_id}', 'ChildrensController@update');
     Route::post('/deleteChildDetails/{child_id}', 'ChildrensController@destroy');
 
     Route::post('/showFathersChildrensDetails/{parent_id}', 'ChildrensController@ShowFathersChildrensDetails');

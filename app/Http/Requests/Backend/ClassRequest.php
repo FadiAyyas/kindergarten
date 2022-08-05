@@ -27,12 +27,25 @@ class ClassRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'class_name' => ['required', 'max:55' ,'string'],
-            'maxCapacity' => ['required', 'max:60','numeric','min:5'],
-            'level_id' => ['required', 'max:16','numeric','min:1'],
-            'employee_id' => ['required', 'numeric','unique:teacher_classes,employee_id'],
-        ];
+        if(!$this->id)
+        {
+            $rules = [
+                'class_name' => ['required', 'max:55' ,'string'],
+                'maxCapacity' => ['required', 'max:60','numeric','min:5'],
+                'level_id' => ['required', 'max:16','numeric','min:1'],
+                'employee_id' => ['required', 'numeric','unique:teacher_classes,employee_id'],
+            ];
+        }
+        if ($this->id) {
+            $rules = [
+                'class_name' => ['required', 'max:55' ,'string'],
+                'maxCapacity' => ['required', 'max:60','numeric','min:5'],
+                'level_id' => ['required', 'max:16','numeric','min:1'],
+                'employee_id' => ['required', 'numeric'],
+            ];
+        }
+
+
         switch ($this->method()) {
             case 'POST': {
                     return $rules;

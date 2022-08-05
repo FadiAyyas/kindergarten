@@ -26,7 +26,7 @@ class ChildrensController extends Controller
             ->Join("Kgclasses", "Kgclasses.id", "=", "registrations.class_id")
             ->Join("season_years", "season_years.id", "=", "registrations.season_year_id")
             ->get([
-                'childrens.id','childrens.childName', 'childrens.birthDate','childrens.ChildImage','childrens.childAddress','childrens.medicalNotes',
+                'childrens.id','childrens.childName','childrens.gender', 'childrens.birthDate','childrens.ChildImage','childrens.childAddress','childrens.medicalNotes',
                 'Kgclasses.id as class_id','Kgclasses.class_name',
                 'season_years.id as season_year_id','season_years.year','season_years.seasonStartDate' ,
             ])->all();
@@ -72,11 +72,13 @@ class ChildrensController extends Controller
     public function update(ChildrensRequest $request, $child_id)
     {
         try {
-            $input = $request->only('childName', 'birthDate', 'gender', 'childAddress', 'medicalNotes');
+            $input=$request->all();
             $Child = Children::findOrFail($child_id);
             if ($request->ChildImage) {
+
                 $this->imageDelete($Child->ChildImage);
                 $input['ChildImage'] = $this->uploadImage($input['childName'], $input['ChildImage'], 'Childrens/images/');
+                //return $this->returnSuccessMessage($input['ChildImage']);
             }
 
             $Child->update($input);
@@ -89,7 +91,7 @@ class ChildrensController extends Controller
     public function ShowFathersChildrensDetails($parent_id)
     {
         try {
-            $details = Children::all()->where('parent_id', $parent_id);
+            $details = Children::where('parent_id', $parent_id)->get();
             return $this->returnData('details', $details, 'Father Childrens details ');
         } catch (Throwable $e) {
             return $this->returnError('Something was wrong, please try again late');

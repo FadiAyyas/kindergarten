@@ -17,6 +17,7 @@ class Children extends Model
     protected $fillable = [
         'childName',
         'birthDate',
+        'gender',
         'ChildImage',
         'childAddress',
         'medicalNotes',
