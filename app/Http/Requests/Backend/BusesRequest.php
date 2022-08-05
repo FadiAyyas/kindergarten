@@ -18,7 +18,7 @@ class BusesRequest extends FormRequest
     public function rules()
     {
 
-        if(!$this->id)
+        if(!$this->Bus_id)
         {
             $rules = [
                 'employee_id' => ['required', 'numeric','unique:buses,employee_id'],
@@ -29,7 +29,7 @@ class BusesRequest extends FormRequest
                 'busItinerary_id' => ['required', 'numeric'],
             ];
         }
-        if ($this->id) {
+        if ($this->Bus_id) {
             $rules = [
                 'employee_id' => ['required', 'numeric'],
                 'driverName' => ['required', 'string','max:22'],
