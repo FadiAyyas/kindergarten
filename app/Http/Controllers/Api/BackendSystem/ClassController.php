@@ -24,7 +24,7 @@ class ClassController extends Controller
             ->Join("employees", "employees.id", "=", "teacher_classes.employee_id")
             ->get([
                 'Kgclasses.id as class_id','Kgclasses.class_name', 'Kgclasses.maxCapacity',
-                'levels.level_name', 'levels.level_minAge', 'levels.level_maxAge',
+                'levels.id as level_id','levels.level_name', 'levels.level_minAge', 'levels.level_maxAge',
                 'employees.id as emp_id','employees.firstName','employees.lastName' ,
             ])->all();
 
