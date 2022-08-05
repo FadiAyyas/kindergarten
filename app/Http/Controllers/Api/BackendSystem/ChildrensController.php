@@ -72,7 +72,7 @@ class ChildrensController extends Controller
     public function update(ChildrensRequest $request, $child_id)
     {
         try {
-            $input = $request->only('childName', 'birthDate', 'gender', 'childAddress', 'medicalNotes');
+            $input = $request->only('childName', 'birthDate', 'gender', 'childAddress', 'medicalNotes','class_id');
             $Child = Children::findOrFail($child_id);
             if ($request->ChildImage) {
                 $this->imageDelete($Child->ChildImage);
