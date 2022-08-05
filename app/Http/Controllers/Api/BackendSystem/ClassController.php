@@ -25,7 +25,7 @@ class ClassController extends Controller
             ->get([
                 'Kgclasses.id as class_id','Kgclasses.class_name', 'Kgclasses.maxCapacity',
                 'levels.level_name', 'levels.level_minAge', 'levels.level_maxAge',
-                'employees.firstName','employees.lastName' ,
+                'employees.id as emp_id','employees.firstName','employees.lastName' ,
             ])->all();
 
             return $this->returnData('Classes', $classes, ' Classes details ');
