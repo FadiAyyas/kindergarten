@@ -21,11 +21,11 @@ class CheckToken
         if($guard != null){
 
             auth()->shouldUse($guard); //shoud you user guard / table
-            /*
+
             $token = $request->header('token');
             $request->headers->set('token', (string) $token, true);
             $request->headers->set('Authorization', 'Bearer '.$token, true);
-            */
+            
             try {
                 $user = JWTAuth::parseToken()->authenticate();
                 //throw an exception
