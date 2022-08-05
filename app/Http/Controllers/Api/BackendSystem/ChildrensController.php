@@ -89,7 +89,7 @@ class ChildrensController extends Controller
     public function ShowFathersChildrensDetails($parent_id)
     {
         try {
-            $details = Children::all()->where('parent_id', $parent_id);
+            $details = Children::where('parent_id', $parent_id)->get();
             return $this->returnData('details', $details, 'Father Childrens details ');
         } catch (Throwable $e) {
             return $this->returnError('Something was wrong, please try again late');
