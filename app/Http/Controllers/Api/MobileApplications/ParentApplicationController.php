@@ -16,6 +16,8 @@ use App\Models\ParentChildAbsence;
 use App\Models\Registration;
 use App\Models\Season_year;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Arr;
+
 use Throwable;
 
 class ParentApplicationController extends Controller
@@ -36,7 +38,7 @@ class ParentApplicationController extends Controller
         }
     }
 
-    public function getChildInfo($child_id)//add class id
+    public function getChildInfo($child_id) //add class id
     {
         try {
             $season_year = Season_year::latest('id')->first();
@@ -49,7 +51,7 @@ class ParentApplicationController extends Controller
                 ->where('registrations.id', $registration->id)
                 ->get([
                     'childrens.id as child_id', 'childrens.childName', 'childrens.ChildImage',
-                    'Kgclasses.id as class_id','Kgclasses.class_name', 'levels.level_name'
+                    'Kgclasses.id as class_id', 'Kgclasses.class_name', 'levels.level_name'
                 ]);
             return $this->returnData('childInfo', $children, ' children info');
         } catch (Throwable $e) {
@@ -96,8 +98,7 @@ class ParentApplicationController extends Controller
                 ->join("registrations", "registrations.class_id", "=", "Kgclasses.id")
                 ->where('registrations.id', $registration->id)
                 ->first([
-                    'employees.id','employees.firstName', 'employees.lastName'
-                    , 'employees.photo','employees.phoneNumber'
+                    'employees.id', 'employees.firstName', 'employees.lastName', 'employees.photo', 'employees.phoneNumber'
                 ]);
 
             return $this->returnData('techer', $teacher, ' teacher');
@@ -169,6 +170,35 @@ class ParentApplicationController extends Controller
                 'registration_id' => $registration->id,
             ]);
             return $this->returnSuccessMessage('تم تسجيل طلب غياب بنجاح');
+        } catch (Throwable $e) {
+            return $this->returnError('هناك مشكلة ما , يرجى المحاولة مرة اخرى في وقت لاحق');
+        }
+    }
+
+    public function getClassesAndBusesIDs()
+    {
+        try {
+            $season_year = Season_year::latest('id')->first();
+
+            $classes_id = Children::join("registrations", "registrations.child_id", "=", "childrens.id")
+                ->where('registrations.season_year_id', $season_year->id)
+                ->where('childrens.parent_id', Auth::user()->id)
+                ->distinct()
+                ->pluck('registrations.class_id')->toArray();
+
+            $buses_id = Children::join("registrations", "registrations.child_id", "=", "childrens.id")
+                ->join("bus_children", "bus_children.registration_id", "=", "registrations.id")
+                ->where('registrations.season_year_id', $season_year->id)
+                ->where('childrens.parent_id', Auth::user()->id)
+                ->where('bus_children.bus_id', "!=", null)
+                ->distinct()
+                ->pluck('bus_children.bus_id')->toArray();
+
+            $info = [
+                'classes_id' => $classes_id,
+                'buses_id' => $buses_id
+            ];
+            return $this->returnData('info', $info, 'children class and bus IDs');
         } catch (Throwable $e) {
             return $this->returnError('هناك مشكلة ما , يرجى المحاولة مرة اخرى في وقت لاحق');
         }

@@ -22,6 +22,7 @@ Route::group($credentialsAuthParent, function () {
     Route::post('/getActivitiesInfo', 'ParentApplicationController@getActivitiesInfo');
     Route::post('/getKgImages', 'ParentApplicationController@getKgImages');
     Route::post('/abcenseRecording', 'ParentApplicationController@abcenseRecording');
+    Route::post('/getClassesAndBusesIDs', 'ParentApplicationController@getClassesAndBusesIDs');
     /* parent chat start */
     Route::post('/sendParentMessage', 'ChatController@sendParentMessage');
     Route::post('/getChatsForParent', 'ChatController@getChatsForParent');
