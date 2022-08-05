@@ -7,9 +7,6 @@ $backendSystem = [
     'middleware' => ['cors']
 ];
 
-
-
-
 Route::group($backendSystem, function () {
 
     //Kindergarten Route
