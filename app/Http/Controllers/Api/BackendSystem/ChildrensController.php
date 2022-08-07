@@ -28,6 +28,7 @@ class ChildrensController extends Controller
             ->get([
                 'childrens.id','childrens.childName','childrens.gender', 'childrens.birthDate','childrens.ChildImage','childrens.childAddress','childrens.medicalNotes',
                 'Kgclasses.id as class_id','Kgclasses.class_name',
+                'registrations.id as registrations_id',
                 'season_years.id as season_year_id','season_years.year','season_years.seasonStartDate' ,
             ])->all();
 
