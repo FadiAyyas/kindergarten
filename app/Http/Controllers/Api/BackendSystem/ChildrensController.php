@@ -136,7 +136,7 @@ class ChildrensController extends Controller
             $registration = Registration::latest('id')->where('child_id', $child_id)->first();
             $details = $registration->childEvaluation;
 
-            return $this->returnData('details', $details, 'Child Absence details ');
+            return $this->returnData('details', $details, 'Child Evaluations details ');
         } catch (Throwable $e) {
             return $this->returnError('Something was wrong, please try again late');
         }
