@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\KGClass;
 use App\Models\Level;
 use App\Models\Employee;
+use App\Models\TeacherClass;
 use App\Http\Traits\GeneralTrait;
 use App\Http\Requests\Backend\ClassRequest;
 use Throwable;
@@ -58,6 +59,10 @@ class ClassController extends Controller
         $input = $request->all();
         try {
             $data = KGClass::findOrFail($id);
+
+            $data1=TeacherClass::where('class_id',$id)->get()->first();
+            $data1->employee_id=$request->employee_id;
+            $data1->save();
             $data->update($input);
             return $this->returnSuccessMessage('class update successfully ');
         } catch (Throwable $e) {

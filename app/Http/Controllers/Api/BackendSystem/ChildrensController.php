@@ -76,13 +76,20 @@ class ChildrensController extends Controller
             $Child = Children::findOrFail($child_id);
             if ($request->ChildImage) {
 
-                $this->imageDelete($Child->ChildImage);
+                if($Child->ChildImage)
+                {
+                    $this->imageDelete($Child->ChildImage);
+                }
                 $input['ChildImage'] = $this->uploadImage($input['childName'], $input['ChildImage'], 'Childrens/images/');
-                //return $this->returnSuccessMessage($input['ChildImage']);
+                $Child->update($input);
+                return $this->returnSuccessMessage('Childrens updated successfully ');
+            }else
+            {
+                $Child->update($input);
+                return $this->returnSuccessMessage('Childrens updated successfully ');
             }
 
-            $Child->update($input);
-            return $this->returnSuccessMessage('Childrens updated successfully ');
+
         } catch (Throwable $e) {
             return $this->returnError('Something was wrong, please try again late');
         }
