@@ -90,6 +90,9 @@ Route::group($backendSystem, function () {
 
     //Buses Route
     Route::post('/showBusItineraries', 'BusesController@showBusItineraries');
+
+    Route::post('/show-Buses-Itineraries', 'BusesController@showBusesItineraries');
+
     Route::post('/showBuses/{Itinerary_id}', 'BusesController@showBuses');
     Route::post('/storeItinerary', 'BusesController@storeItinerary');
     Route::post('/updateItinerary/{Itinerary_id}', 'BusesController@updateItinerary');

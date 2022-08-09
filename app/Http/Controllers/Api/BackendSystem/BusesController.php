@@ -29,6 +29,21 @@ class BusesController extends Controller
     }
 
 
+    public function showBusesItineraries()
+    {
+        try {
+            $details = BusItinerary::join("buses", "buses.busItinerary_id", "=", "bus_itineraries.id")
+            ->get([
+                'buses.id as bus_id', 'buses.driverName', 'buses.driverPhoneNumber', 'buses.busTypeName','buses.plateNumber',
+                'bus_itineraries.id as Itinerary_id ','bus_itineraries.itinerary', 'bus_itineraries.cost',
+            ]);
+
+            return $this->returnData('details', $details, ' Buses for Itinerary details');
+        } catch (Throwable $e) {
+            return $this->returnError('Something was wrong, please try again late');
+        }
+    }
+
     public function showBuses($Itinerary_id)
     {
         try {
