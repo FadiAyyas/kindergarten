@@ -135,7 +135,7 @@ class BusesController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'registration_id' => ['required', 'numeric'],
+                'registration_id' => ['required', 'numeric','unique:bus_children,registration_id'],
             ]);
             if ($validator->fails()) {
                 return $this->returnError($validator->errors());
