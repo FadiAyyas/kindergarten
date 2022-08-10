@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\BackendSystem;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -16,6 +15,11 @@ class DashboardController extends Controller
         $activities = DB::table('activities')->count();
         $buses = DB::table('buses')->count();
         $childrens = DB::table('childrens')->count();
+        $subjects = DB::table('subjects')->count();
+
+        //الاعضاء المنضمين حديثا
+        //اخر اربع سنوات  + عدد الاطفال +المرابح
+
     }
 
 }

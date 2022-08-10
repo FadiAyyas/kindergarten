@@ -63,7 +63,7 @@ class EmployeeAuthController extends Controller
     {
         return response()->json([
             'token_type' => 'bearer',
-            'expires_in' => JWTAuth::factory()->setTTL(60 * 24),
+            'expires_in' => JWTAuth::factory()->setTTL(60 * 60 * 24),
             'token' => $token,
         ]);
     }
