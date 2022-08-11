@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 $backendSystem = [
     'namespace' => 'App\Http\Controllers\Api\BackendSystem',
-    'middleware' => ['cors']
+    'middleware' => ['cors','CheckToken:employee_api']
 ];
 
 Route::group($backendSystem, function () {

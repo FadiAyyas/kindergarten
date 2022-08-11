@@ -10,9 +10,11 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Traits\GeneralTrait;
 use App\Http\Requests\Backend\AuthRequest;
 use App\Models\Employee;
+use App\Models\Kindergarten;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeAuthController extends Controller
 {
@@ -36,6 +38,13 @@ class EmployeeAuthController extends Controller
         }
         Arr::add($role, 'employee_id', Auth::user()->id);
         Arr::add($role, 'token', $token);
+
+        $count=DB::table('kindergartens')->count();
+        if($count!=0)
+            Arr::add($role, 'is_active', true);
+        else
+            Arr::add($role, 'is_active', false);
+
         return $this->returnData('details', $role, 'success');
     }
 
