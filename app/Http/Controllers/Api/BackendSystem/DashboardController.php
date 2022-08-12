@@ -16,7 +16,7 @@ class DashboardController extends Controller
 
 
             $levels = DB::table('levels')->count();
-           // $classes = DB::table('kgclasses')->count();
+            $classes = DB::table('Kgclasses')->count();
             $employees = DB::table('employees')->count();
             $activities = DB::table('activities')->count();
             $buses = DB::table('buses')->count();
@@ -24,7 +24,7 @@ class DashboardController extends Controller
             $subjects = DB::table('subjects')->count();
 
             $data = [
-            //'classes' => $classes,
+            'classes' => $classes,
              'levels' => $levels,
              'employees' => $employees,
              'activities' => $activities,
