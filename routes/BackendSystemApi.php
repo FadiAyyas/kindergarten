@@ -110,5 +110,7 @@ Route::group($backendSystem, function () {
     Route::post('/storeSubject', 'SubjectsController@store');
     Route::post('/updateSubject/{id}', 'SubjectsController@update');
     Route::post('/deleteSubject/{id}', 'SubjectsController@destroy');
+
+    Route::post('/get-statistics', 'DashboardController@statistics');
 });
 
