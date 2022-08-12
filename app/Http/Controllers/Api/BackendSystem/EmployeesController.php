@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeesController extends Controller
 {
@@ -60,8 +61,9 @@ class EmployeesController extends Controller
     public function destroy($id)
     {
         try {
+            $emp=Employee::findOrFail(Auth::user('id'));
             $data = Employee::findOrFail($id);
-            if ($data->role = 'مدير') {
+            if ($emp->role = 'مدير') {
                 return $this->returnError("Unauthorize delete Super Admin details ");
             } else {
                 $this->imageDelete($data->photo);
@@ -92,7 +94,7 @@ class EmployeesController extends Controller
         }
     }
 
-    
+
     public function availableTeachers()
     {
         try {
