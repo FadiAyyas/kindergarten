@@ -14,8 +14,9 @@ class DashboardController extends Controller
     {
         try {
 
-            $classes = DB::table('kgclasses')->count();
+
             $levels = DB::table('levels')->count();
+            $classes = DB::table('kgclasses')->count();
             $employees = DB::table('employees')->count();
             $activities = DB::table('activities')->count();
             $buses = DB::table('buses')->count();
