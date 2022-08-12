@@ -61,7 +61,7 @@ class EmployeesController extends Controller
     public function destroy($id)
     {
         try {
-            $emp=Employee::findOrFail(Auth::user('id'));
+            $emp=Employee::findOrFail(Auth::user()->id);
             $data = Employee::findOrFail($id);
             if ($emp->role = 'مدير') {
                 return $this->returnError("Unauthorize delete Super Admin details ");
