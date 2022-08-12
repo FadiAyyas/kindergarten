@@ -63,7 +63,7 @@ class EmployeesController extends Controller
         try {
             $emp=Employee::findOrFail(Auth::user()->id);
             $data = Employee::findOrFail($id);
-            if ($emp->role = 'مدير') {
+            if ($emp->role != 'مدير') {
                 return $this->returnError("Unauthorize delete Super Admin details ");
             } else {
                 $this->imageDelete($data->photo);
