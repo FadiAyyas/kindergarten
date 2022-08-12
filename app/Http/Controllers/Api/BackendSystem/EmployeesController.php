@@ -46,7 +46,6 @@ class EmployeesController extends Controller
         $input = $request->all();
         try {
             $data = Employee::findOrFail($id);
-
             if ($request->photo) {
                 $this->imageDelete($data->photo);
                 $input['photo'] = $this->uploadImage($input['firstName'], $request->photo, 'Employee/images/');
@@ -63,7 +62,7 @@ class EmployeesController extends Controller
         try {
             $emp=Employee::findOrFail(Auth::user()->id);
             $data = Employee::findOrFail($id);
-            if ($emp->role != 'مدير') {
+            if ($emp->role != 'مدير' && $data->role =='مدير') {
                 return $this->returnError("Unauthorize delete Super Admin details ");
             } else {
                 $this->imageDelete($data->photo);
