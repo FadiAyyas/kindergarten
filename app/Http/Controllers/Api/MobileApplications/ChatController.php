@@ -13,8 +13,10 @@ use App\Models\Employee;
 use App\Models\ParentCh;
 use App\Models\Registration;
 use App\Models\Season_year;
+use App\Models\TeacherClass;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Http\Request;
 use Throwable;
 
 class ChatController extends Controller
@@ -102,7 +104,35 @@ class ChatController extends Controller
             return $this->returnError('Something was wrong, please try again late');
         }
     }
+    public function sendGroupEmployeeMessage(Request $request)
+    {
+        try {
+            $season_year = Season_year::latest('id')->first();
+            $class_id=TeacherClass::where("employee_id",Auth::user()->id)->first();
+            $parents=Registration::join("childrens","childrens.id","=","child_id")
+                     ->join("parents","parents.id","=","childrens.parent_id")
+                     ->where('registrations.season_year_id',$season_year->id)
+                     ->where("registrations.class_id",$class_id->class_id)
+                     ->distinct()
+                     ->pluck('parents.id')->toArray();
 
+                     foreach($parents as $id){
+                        Chat::create([
+                            'message' => Crypt::encryptString($request->message),
+                            'parent_id' => $id,
+                            'employee_id' => Auth::user()->id,
+                            'from' => 'employee',
+                            'to' => 'parent',
+                        ]);
+                        $employee = Employee::where('id', Auth::user()->id)->first();
+
+                        broadcast(new ParentChatListener($request->message, $id, $employee));
+                     }
+            return $this->returnSuccessMessage('Message send successfully ');
+        } catch (Throwable $e) {
+            return $this->returnError('Something was wrong, please try again late');
+        }
+    }
     public function getChatsForTeacher()
     {
         try {

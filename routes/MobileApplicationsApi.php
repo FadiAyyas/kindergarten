@@ -55,6 +55,7 @@ Route::group($credentialsAuthEmployee, function () {
 
     /* teacher chat start */
     Route::post('/sendEmployeeMessage', 'ChatController@sendEmployeeMessage');
+    Route::post('/sendGroupEmployeeMessage', 'ChatController@sendGroupEmployeeMessage');
     Route::post('/getChatsForTeacher', 'ChatController@getChatsForTeacher');
     Route::post('/getMessagesForTeacher/{parent_id}', 'ChatController@getMessagesForTeacher');
     /* teachaer chat end */
