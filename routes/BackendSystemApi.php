@@ -112,5 +112,8 @@ Route::group($backendSystem, function () {
     Route::post('/deleteSubject/{id}', 'SubjectsController@destroy');
 
     Route::post('/get-statistics', 'DashboardController@statistics');
+
+
+    Route::post('/get-data-chart', 'DashboardController@dataChart');
 });
 

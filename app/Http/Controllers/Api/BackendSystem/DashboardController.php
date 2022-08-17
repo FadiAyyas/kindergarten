@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use App\Http\Traits\GeneralTrait;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -24,7 +26,7 @@ class DashboardController extends Controller
             $subjects = DB::table('subjects')->count();
 
             $data = [
-            'classes' => $classes,
+             'classes' => $classes,
              'levels' => $levels,
              'employees' => $employees,
              'activities' => $activities,
@@ -38,8 +40,21 @@ class DashboardController extends Controller
             return $this->returnError($e);
         }
 
-        //الاعضاء المنضمين حديثا
-        //اخر اربع سنوات  + عدد الاطفال +المرابح
+
+    }
+    public function dataChart(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'year' => 'required|numeric|min:2021|max:2050'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->returnError($validator->errors());
+        }
+
+        $sesons_year = array();
+        $price=array();
+        $countChild=array();
 
     }
 
